@@ -2,18 +2,17 @@
 
 Web app for recording archaeological sites, stratigraphic layers (US) and finds in the Venice lagoon. Built by the WPI VE16ARCHEO team at the Venice Project Center in 2016.
 
-Stack: AngularJS 1.8 + AngularFire 2.3, Firebase 12 (compat SDK: Realtime Database and Email/Password Auth), Materialize 0.97 and Leaflet 1.9 for the site map. It is a static site; `app.js` is only a local dev server.
+Stack: AngularJS 1.8 + AngularFire 2.3, Firebase 12 (compat SDK: Realtime Database and Email/Password Auth), Materialize 0.97 and Leaflet 1.9 for the site map. It is a plain static site (`public/`, entry point `public/index.html`) with no build step and no server.
 
 ## Run locally
 
 ```
-npm install
-npm start          # http://localhost:3000
+npm start          # serves public/ at http://localhost:3000 (needs Node)
 ```
 
 ## Deploy on Vercel
 
-Import the repo in Vercel. No settings are needed: `vercel.json` serves `public/` as a static site with no build step and redirects `/` to `/angularfire.html`.
+Import the repo in Vercel. No settings are needed: `vercel.json` serves `public/` as a static site with no build step. Old `/angularfire.html` links redirect to `/`.
 
 ## Firebase
 

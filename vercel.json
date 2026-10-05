@@ -4,8 +4,7 @@
   "installCommand": "",
   "buildCommand": "",
   "outputDirectory": "public",
-  "cleanUrls": false,
   "redirects": [
-    { "source": "/", "destination": "/angularfire.html", "permanent": false }
+    { "source": "/angularfire.html", "destination": "/", "permanent": true }
   ]
 }

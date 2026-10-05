@@ -4,12 +4,6 @@
   "private": true,
   "description": "VE16ARCHEO archaeological site database for the Venice lagoon",
   "scripts": {
-    "start": "node app.js"
-  },
-  "engines": {
-    "node": ">=20"
-  },
-  "dependencies": {
-    "express": "^5.2.1"
+    "start": "npx --yes serve@14 public -l 3000"
   }
 }
