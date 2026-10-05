@@ -1,20 +1,17 @@
-<div id="loginModal" class="modal" style="display:block">
-    <form class="modal-content animate">
+<div id="loginModal" class="login-modal">
+    <form class="modal-content animate" ng-submit="bc.signIn()" novalidate>
         <div id="login_form" class="container" align="center">
             <h2> Login </h2>
-            <label><b>E-mail</b></label><br/>
-            <input id="email" type="text" class="modaltext" placeholder="John@example.com" name="uname" required><br/>
+            <label for="email"><b>E-mail</b></label><br/>
+            <input id="email" type="email" class="modaltext" placeholder="John@example.com" name="uname" autocomplete="username" ng-model="bc.credentials.email" required><br/>
 
-            <label><b>Password</b></label><br/>
-            <input id="password" type="password" class="modalpassword" placeholder="Enter Password" name="psw" required><br/>
-            <div id="logError" style="display:none">
-            </div>
-            <button type="submit" class="modalbutton" onclick="toggleSignIn()">Login</button><br/>
-            <input type="checkbox" checked="checked"> Remember me
+            <label for="password"><b>Password</b></label><br/>
+            <input id="password" type="password" class="modalpassword" placeholder="Enter Password" name="psw" autocomplete="current-password" ng-model="bc.credentials.password" required><br/>
+            <div id="logError" class="ui error message" ng-if="bc.loginError">{{ bc.loginError }}</div>
+            <div class="ui info message" ng-if="bc.loginInfo">{{ bc.loginInfo }}</div>
+            <button type="submit" class="modalbutton" ng-disabled="bc.signingIn">{{ bc.signingIn ? 'Signing in…' : 'Login' }}</button><br/>
+            <input type="checkbox" id="rememberMe" ng-model="bc.credentials.remember"><label for="rememberMe">Remember me</label>
+            <span class="psw"><a href="" ng-click="bc.resetPassword()">Forgot password?</a></span>
         </div>
     </form>
-    <div id="loginErrorContainer" style="display: none" class="ui error message">
-        <div class="header">Error:</div>
-        <p id="loginError"></p>
-    </div>
 </div>

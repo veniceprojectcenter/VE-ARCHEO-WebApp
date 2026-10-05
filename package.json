@@ -1,8 +1,15 @@
 {
-  "name": "application-name",
-  "version": "0.0.1",
+  "name": "ve-archeo-webapp",
+  "version": "0.1.0",
+  "private": true,
+  "description": "VE16ARCHEO archaeological site database for the Venice lagoon",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "engines": {
+    "node": ">=20"
+  },
   "dependencies": {
-    "angularfire": "^2.1.0",
-    "express": "latest"
+    "express": "^5.2.1"
   }
 }

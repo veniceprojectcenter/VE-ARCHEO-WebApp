@@ -1,6 +1,9 @@
 <div id="topBar">
     <ul class="topnav">
-        <li><a class="active" href="/angularfire.html">Home</a></li>
-        <li class="right"><div id="uName"></div></li>
+        <li><a ng-class="{active: bc.view === 'choice'}" href="" ng-click="bc.index()">Home</a></li>
+        <li><a ng-class="{active: bc.view === 'search' || bc.view === 'site' || bc.view === 'layers' || bc.view === 'layerInfo' || bc.view === 'finds' || bc.view === 'chooseFindType' || bc.view === 'findForm'}" href="" ng-click="bc.go('search')">Sites</a></li>
+        <li><a ng-class="{active: bc.view === 'map'}" href="" ng-click="bc.go('map')">Map</a></li>
+        <li class="right"><a href="" ng-click="bc.signOut()">Sign out</a></li>
+        <li class="right"><div id="uName">{{ bc.user.name }}</div></li>
     </ul>
 </div>

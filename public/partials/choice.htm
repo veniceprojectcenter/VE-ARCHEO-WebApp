@@ -1,6 +1,7 @@
-<div id="choiceDiv" style="display:block">
+<div class="choice">
     <h2> What would you like to do?</h2>
-    <button id="createSiteBtn" onclick="toggle_visibility('choiceDiv','siteDiv')"> Create new site </button> <br/><br/>
-    <button id="editSiteBtn" onclick="toggle_visibility('choiceDiv','searchDiv')"> Edit existing site </button><br/><br/>
-    <button id="visMapBtn" onclick="toggle_visibility('choiceDiv','mapDiv')"> Go to site map </button><br/><br/>
+    <button id="createSiteBtn" ng-click="bc.newSite()"> Create new site </button> <br/><br/>
+    <button id="editSiteBtn" ng-click="bc.go('search')"> Edit existing site </button><br/><br/>
+    <button id="visMapBtn" ng-click="bc.go('map')"> Go to site map </button><br/><br/>
+    <p class="grey-text">{{ bc.sites.length }} sites in the database</p>
 </div>

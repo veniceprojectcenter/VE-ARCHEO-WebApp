@@ -1,45 +1,47 @@
 <!DOCTYPE html>
-<html data-ng-app="app">
+<html lang="it" data-ng-app="app">
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Ve-Archeo</title>
-    <!--CSS-->
-    <link href="../css/semantic.min.css" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" type="text/css" href="/stylesheets/app.css">
-    <!-- JQuery -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <!-- AngularJS -->
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
-    <!-- Firebase -->
-    <script src="//www.gstatic.com/firebasejs/3.4.1/firebase.js"></script>
-    <!-- AngularFire -->
-    <script src="//cdn.firebase.com/libs/angularfire/2.1.0/angularfire.min.js"></script>
-    <script type="text/javascript" src="angularfire.js"></script>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%2326a69a'/%3E%3Ctext x='16' y='22' font-family='Arial' font-size='16' font-weight='bold' text-anchor='middle' fill='white'%3EVA%3C/text%3E%3C/svg%3E">
     <!--Import Google Icon Font-->
-    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!--Import materialize.css-->
     <link type="text/css" rel="stylesheet" href="/stylesheets/materialize/css/materialize.min.css"  media="screen,projection"/>
-
-    <!--Let browser know website is optimized for mobile-->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <!-- Leaflet (site map) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+    <!--CSS-->
+    <link rel="stylesheet" type="text/css" href="/stylesheets/app.css">
+    <!-- jQuery (single copy; required by Materialize) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <!-- AngularJS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.3/angular.min.js"></script>
+    <!-- Firebase (compat build keeps the namespaced firebase.* API) -->
+    <script src="https://www.gstatic.com/firebasejs/12.19.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/12.19.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/12.19.0/firebase-database-compat.js"></script>
+    <!-- AngularFire -->
+    <script src="https://cdn.jsdelivr.net/npm/angularfire@2.3.0/dist/angularfire.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+    <script type="text/javascript" src="angularfire.js"></script>
 </head>
-<body data-ng-controller= "ArchCtrl as bc">
+<body data-ng-controller="ArchCtrl as bc" ng-cloak>
+
+<div id="barDiv" ng-if="bc.user" ng-include="'/partials/bar.htm'"></div>
+<div id="loginDiv" ng-if="bc.view === 'login'" ng-include="'/partials/login.htm'"></div>
+<div class="loading" ng-if="bc.view === 'loading'">Loading&hellip;</div>
 
 <!-- Content -->
-<div id= "home" class="content">
-
-    <!--<div id="barDiv" ng-include="'/partials/bar.htm'"></div>-->
-    <!--<div id="loginDiv" ng-include="'/partials/login.htm'"></div>-->
-    <!--<div id="choiceDiv" ng-include="'/partials/choice.htm'"></div>-->
+<div id="home" class="content container" ng-if="bc.user">
+    <div class="notice" ng-if="bc.notice">{{ bc.notice }} <a href="" ng-click="bc.notice = null">Dismiss</a></div>
+    <div id="choiceDiv" ng-show="bc.view === 'choice'" ng-include="'/partials/choice.htm'"></div>
+    <div id="searchSiteDiv" ng-show="bc.view === 'search'" ng-include="'/partials/searchSite.htm'"></div>
     <div id="newSiteDiv" ng-include="'/partials/dataInput.htm'"></div>
-    <!--<div id="searchSiteDiv" ng-include="'/partials/searchSite.htm'"></div>
-    <div id="layerMoreInfoDiv" ng-include="'/partials/Raw forms/searchSite.htm'"></div>-->
-    <div id="mapDiv" ng-include="'/partials/map.htm'"></div>
-   <!-- <div id="showMoreDiv" ng-include="'/partials/showMore.htm'"></div>-->
+    <div id="mapDiv" ng-show="bc.view === 'map'" ng-include="'/partials/map.htm'"></div>
 </div>
 
 <!-- Scripts -->
-<script src="/scripts/login.js"></script>
 <script type="text/javascript" src="/stylesheets/materialize/js/materialize.min.js"></script>
 
 </body>

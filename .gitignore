@@ -1,0 +1,10 @@
+build/
+# Credentials
+*serviceAccount*.json
+.env*
+.firebase/
+# Tooling
+node_modules/
+.idea/
+.vercel/
+__pycache__/

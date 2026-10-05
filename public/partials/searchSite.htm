@@ -1,24 +1,33 @@
-<div id="searchDiv" style="display:none">
+<div id="searchDiv">
     <div class="content">
         <h2> Please enter the site number</h2>
-        <form>
-            <input type="text" class="searchBar" name="search" placeholder="Search.." ng-model="bc.searchTxt">
+        <form ng-submit="bc.searchSite()">
+            <input type="text" class="searchBar" name="search" placeholder="Search.." ng-model="bc.searchTxt" ng-change="bc.searchSite()" aria-label="Search sites">
             <br/>
-            <button id="searchBtn" ng-click="bc.searchSite()" value="Send" ng-disabled="bc.searchTxt==null"> </button>
+            <button id="searchBtn" type="submit"> Search </button>
         </form>
-        <table id="SiteTable" border="1" class="ui table">
+        <p class="grey-text">
+            Showing {{ bc.searchResults.length > 100 ? 100 : bc.searchResults.length }} of {{ bc.searchResults.length }} matching sites
+            ({{ bc.sites.length }} total). Search by catalogue number, name, epoch, type or interpretation.
+        </p>
+        <table id="SiteTable" class="ui table">
             <tr>
                 <th> Site ID </th>
                 <th> Site name </th>
                 <th> Description </th>
                 <th> Edit site </th>
             </tr>
-            <tr ng-repeat="site in bc.searchResults">
-                <td align="center"> {{ el.newLayer.us }} </td>
-                <td align="center"> <textarea id="{{ el.newLayer.us  }}Desc" cols="40" rows="3"> </textarea></td>
-                <td align="center"> <button class="tablebutton" id="{{ el.newLayer.us  }}EditLayer" onclick="toggle_visibility('layerMatrixDiv','layerInfoDiv')">Edit</button></td>
-                <td align="center"> <button class="tablebutton" id="{{ el.newLayer.us  }}EditFinds" onclick="toggle_visibility('layerMatrixDiv','layerFindsDiv')">Edit</button></td>
-                <td align="center"> <button class="tablebutton" id="{{ el.newLayer.us   }}RemoveLayer" ng-click = "bc.removeLayer(el.newLayer.us)">Remove</button></td>
+            <tr ng-repeat="site in bc.searchResults | limitTo:100 track by site.key">
+                <td> {{ site.catalog || '—' }} </td>
+                <td> {{ site.name || '—' }} </td>
+                <td class="description-cell">
+                    {{ bc.describe(site) }}
+                    <div class="grey-text" ng-if="site.interp">{{ site.interp | limitTo:140 }}{{ site.interp.length > 140 ? '…' : '' }}</div>
+                </td>
+                <td> <button class="tablebutton" ng-click="bc.editSite(site.key)">Edit</button></td>
+            </tr>
+            <tr ng-if="!bc.searchResults.length">
+                <td colspan="4">No sites match "{{ bc.searchTxt }}".</td>
             </tr>
         </table>
     </div>

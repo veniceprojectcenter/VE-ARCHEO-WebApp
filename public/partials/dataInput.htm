@@ -1,391 +1,277 @@
-<div id="siteDiv" style="display:none">
+<!-- SITE FORM * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
+<div id="siteDiv" ng-show="bc.view === 'site'">
     <div class="content">
-        <form>
+        <p class="saved-hint">Changes are saved automatically.</p>
+        <form ng-submit="bc.go('layers')">
             <h4> General information </h4>
-            <br/><br/>
-            <button onclick="getLocation()">Get location</button><br/><br/>
-            <div class="input-field col s6">
-                <input id="txtSiteCode" type="text" ng-model="site['code']"><label for="txtSiteCode">Site code</label>
+            <div class="row">
+                <div class="input-field col s12">
+                    <input id="txtSiteName" type="text" ng-model="site['name']"><label for="txtSiteName">Site name</label>
+                </div>
+                <div class="input-field col s12 m6">
+                    <input id="txtSiteCode" type="text" ng-model="site['code']"><label for="txtSiteCode">Site code</label>
+                </div>
+                <div class="input-field col s12 m6">
+                    <input id="txtYear" type="text" ng-model="site['year']"><label for="txtYear">Year</label>
+                </div>
+                <div class="input-field col s12 m6">
+                    <input id="txtArchaeologist" type="text" ng-model="site['archaeologist']"><label for="txtArchaeologist">Archaeologist</label>
+                </div>
+                <div class="input-field col s12 m6">
+                    <input id="txtSciManagement" type="text" ng-model="site['scimanage']"><label for="txtSciManagement">Science Management</label>
+                </div>
+                <div class="input-field col s12 m6">
+                    <input id="txtCatNumber" type="text" ng-model="site['catalog']"><label for="txtCatNumber">Catalogue Number</label>
+                </div>
+                <div class="input-field col s12 m6">
+                    <input id="txtSoprArcheo" type="text" placeholder="Soprintendenza Archeologica per il Veneto" ng-model="site['sopr']" disabled>
+                </div>
             </div>
-            <div class="input-field col s6">
-                <input id="txtYear" type="text" ng-model="site['year']"><label for="txtYear">Year</label>
-            </div>
-            <div class="input-field col s6">
-                <input id="txtArchaeologist" type="text" ng-model="site['archaeologist']"><label for="txtArchaeologist">Archaeologist</label>
-            </div>
-            <div class="input-field col s6">
-                <input id="txtSciManagement" type="text" ng-model="site['scimanage']"><label for="txtSciManagement">Science Management</label>
-            </div>
-            <div class="input-field col s6">
-                <input id="txtCatNumber" type="text" ng-model="site[catalog]"><label for="txtCatnumber">Catalogue Number</label>
-            </div>
-                <input id="txtSoprArcheo" type="text" placeholder="Soprintendenza Archeologica per il Veneto" ng-model="site['sopr']" disabled>
-            <br /><br/>
 
             <h3> Geographic Information </h3>
-            <div class="input-field col s6">
-                <input id="txtPlace" type="text" ng-model="site['place']"><label for="txtPlace">Place</label>
-            </div>
-            <div class="input-field col s6">
-                <input id="txtGeoArea" type="text" ng-model="site['area']"><label for="txtGeoArea">Geographical Area</label>
-            </div>
-            <!--These two are not in the database-->
-            <div class="input-field col s6">
-                <input id="txtSettlement" type="text"><label for="txtSettlement">Settlement</label>
-            </div>
-            <div class="input-field col s6">
-                <input id="txtSite" type="text" placeholder="Site">
+            <div class="row">
+                <div class="input-field col s12 m6">
+                    <input id="txtPlace" type="text" ng-model="site['place']"><label for="txtPlace">Place</label>
+                </div>
+                <div class="input-field col s12 m6">
+                    <input id="txtGeoArea" type="text" ng-model="site['area']"><label for="txtGeoArea">Geographical Area</label>
+                </div>
+                <div class="input-field col s12 m6">
+                    <input id="txtSettlement" type="text" ng-model="site['settlement']"><label for="txtSettlement">Settlement</label>
+                </div>
+                <div class="input-field col s12 m6">
+                    <input id="txtSite" type="text" ng-model="site['center']"><label for="txtSite">Center (North/South Lagoon)</label>
+                </div>
+                <div class="input-field col s12 m5">
+                    <input id="txtLat" type="number" step="any" ng-model="site['lat']"><label for="txtLat">Latitude</label>
+                </div>
+                <div class="input-field col s12 m5">
+                    <input id="txtLong" type="number" step="any" ng-model="site['long']"><label for="txtLong">Longitude</label>
+                </div>
+                <div class="col s12 m2">
+                    <button type="button" ng-click="bc.getLocation()">Get location</button>
+                </div>
             </div>
 
             <h5>Intervention Type</h5>
-            <input type = "checkbox" id="chkExcavation" value="Excavation"> <label for="chkExcavation">Excavation</label><br />
-            <input type = "checkbox" id="chkSamples" value="Samples"> <label for="chkSamples">Samples</label><br />
-            <input type = "checkbox" id="chkTomb" value="Tomb"> <label for="chkTomb">Tomb</label><br />
-            <input type = "checkbox" id="chkAnomalies" value="Anomalies"> <label for="chkAnomalies">Anomalies</label><br />
-            <input type = "checkbox" id="chkCoreSampling" value="Core Sampling"> <label for="chkCoreSampling">Core Sampling</label><br /><br />
-            <br/><br/>
+            <p ng-repeat="t in ['Excavation', 'Samples', 'Tomb', 'Anomalies', 'Core Sampling']">
+                <input type="checkbox" id="chkIntervention{{ $index }}" ng-checked="bc.hasToken(site, 'intervention', t)" ng-click="bc.toggleToken(site, 'intervention', t)">
+                <label for="chkIntervention{{ $index }}">{{ t }}</label>
+            </p>
+
             <h4> Specific Information </h4>
             <h5> Site information </h5>
-            <form action="#">
-            <input type="radio" id ="urb1" name="urban" value="Urban">  <label for="urb1">Urban</label>
-            <input type="radio" id="urb2" name="urban" value="Non Urban"> <label for="urb2">Non-Urban</label>
-            <br/> <br/>
-            <input type="radio" id="wet1" name="wetness" value="Wet"> <label for="wet1">Wet</label>
-            <input type="radio" id="wet2" name="wetness" value="Dry"> <label for="wet2">Dry</label>
-            <input type="radio" id="wet3" name="wetness" value="Underwater"> <label for="wet3">Underwater</label>
-                <br/> <br/>
-            <h5> Object Finds </h5>
-            <input type="radio" id="obj1" name="objFinds" value="Yes"> <label for="obj1">Yes</label>
-            <input type="radio" id="obj2" name="objFinds" value="No"> <label for="obj2">No</label>
-                <br/> <br/>
-            <h5> Analysis </h5>
-            <input type="radio" id="anal1" name="analysis" value="Yes"> <label for="anal1">Yes</label>
-            <input type="radio" id="anal2" name="analysis" value="No"> <label for="anal2">No</label>
-                <br/> <br/>
-            <h5> Draw Maps </h5>
-            <input type="radio" id="map1" name="drawMaps" value="Yes"> <label for="map1">Yes</label>
-            <input type="radio" id="map2" name="drawMaps" value="No"> <label for="map2">No</label>
-                <br/> <br/>
-            <h5> Vertical Draw Section </h5>
-            <input type="radio" id="draw1" name="drawSection" value="Yes"> <label for="draw1">Yes</label>
-            <input type="radio" id="draw2" name="drawSection" value="No"> <label for="draw2">No</label>
-                <br/> <br/>
-            <h5> Photos/Film </h5>
-            <input type="radio" id="pho1" name="photosFilm" value="Yes"> <label for="pho1">Yes</label>
-            <input type="radio" id="pho2" name="photosFilm" value="No"> <label for="pho2">No</label>
-                <br/> <br/>
-            <h5> Digital Photos </h5>
-            <input type="radio" id="digi1" name="digitalPhotos" value="Yes"> <label for="digi1">Yes</label>
-            <input type="radio" id="digi2" name="digitalPhotos" value="No"> <label for="digi2">No</label>
-                <br/> <br/>
+            <p>
+                <input type="radio" id="urb1" name="urban" value="Urban" ng-model="site['type1']"> <label for="urb1">Urban</label>
+                <input type="radio" id="urb2" name="urban" value="Non-Urban" ng-model="site['type1']"> <label for="urb2">Non-Urban</label>
+            </p>
+            <p>
+                <input type="radio" id="wet1" name="wetness" value="Wet" ng-model="site['type2']"> <label for="wet1">Wet</label>
+                <input type="radio" id="wet2" name="wetness" value="Dry" ng-model="site['type2']"> <label for="wet2">Dry</label>
+                <input type="radio" id="wet3" name="wetness" value="Underwater" ng-model="site['type2']"> <label for="wet3">Underwater</label>
+            </p>
+            <div ng-repeat="q in [{key: 'objfind', label: 'Object Finds'}, {key: 'analysis', label: 'Analysis'}, {key: 'drawmap', label: 'Draw Maps'}, {key: 'drawsec', label: 'Vertical Draw Section'}, {key: 'photo', label: 'Photos/Film'}, {key: 'digipho', label: 'Digital Photos'}]">
+                <h5> {{ q.label }} </h5>
+                <input type="radio" id="{{ q.key }}Yes" name="{{ q.key }}" value="Yes" ng-model="site[q.key]"> <label for="{{ q.key }}Yes">Yes</label>
+                <input type="radio" id="{{ q.key }}No" name="{{ q.key }}" value="No" ng-model="site[q.key]"> <label for="{{ q.key }}No">No</label>
+            </div>
             <h5>Finds</h5>
-                <input type = "checkbox" id="chkFinds" value="Structure"> <label for="chkFinds">Structure</label><br />
-                <input type = "checkbox" id="chkLayers" value="Layers"> <label for="chkLayers">Layers</label><br />
-                <input type = "checkbox" id="chkObject" value="Object"> <label for="chkObject">Object</label><br /><br />
-                <br/> <br/><br/>
-            </form>
+            <p ng-repeat="f in [{value: 'Structures', label: 'Structure'}, {value: 'Layers', label: 'Layers'}, {value: 'Find objects', label: 'Object'}]">
+                <input type="checkbox" id="chkFinds{{ $index }}" ng-checked="bc.hasToken(site, 'finds', f.value)" ng-click="bc.toggleToken(site, 'finds', f.value)">
+                <label for="chkFinds{{ $index }}">{{ f.label }}</label>
+            </p>
 
             <h3> Dating </h3>
             <h5> Age or Epoch </h5>
-            <div class="input-field col s12">
-            <select>
-                <option value="" disabled selected>Choose...</option>
-                <option value="Paleolithic">Paleolithic</option>
-                <option value="Mesolithic">Mesolithic</option>
-                <option value="Neolithic">Neolithic</option>
-                <option value="Copper Age">Copper Age</option>
-                <option value="Bronze Age">Bronze Age</option>
-                <option value="Iron Age">Iron Age</option>
-                <option value="Roman">Roman</option>
-                <option value="Late Antiquity">Late Antiquity</option>
-                <option value="Early Medival">Early Medival</option>
-                <option value="Late Medival">Late Medival</option>
-                <option value="Modern">Modern</option>
-                <option value="Contemporary">Contemporary</option>
-            </select>
-            <h4> Century </h4>
-            From:
-            <select>
-                <option value="12 BC">12 BC</option>
-                <option value="11 BC">11 BC</option>
-                <option value="10 BC">10 BC</option>
-                <option value="9 BC">9 BC</option>
-                <option value="8 BC">8 BC</option>
-                <option value="7 BC">7 BC</option>
-                <option value="6 BC">6 BC</option>
-                <option value="5 BC">5 BC</option>
-                <option value="4 BC">4 BC</option>
-                <option value="3 BC">3 BC</option>
-                <option value="2 BC">2 BC</option>
-                <option value="1 BC">1 BC</option>
-                <option value="1 AD">1 AD</option>
-                <option value="2 AD">2 AD</option>
-                <option value="3 AD">3 AD</option>
-                <option value="4 AD">4 AD</option>
-                <option value="5 AD">5 AD</option>
-                <option value="6 AD">6 AD</option>
-                <option value="7 AD">7 AD</option>
-                <option value="8 AD">8 AD</option>
-                <option value="9 AD">9 AD</option>
-                <option value="10 AD">10 AD</option>
-                <option value="11 AD">11 AD</option>
-                <option value="12 AD">12 AD</option>
-                <option value="13 AD">13 AD</option>
-                <option value="14 AD">14 AD</option>
-                <option value="15 AD">15 AD</option>
-                <option value="16 AD">16 AD</option>
-                <option value="17 AD">17 AD</option>
-                <option value="18 AD">18 AD</option>
-                <option value="19 AD">19 AD</option>
-                <option value="20 AD">20 AD</option>
-            </select>
-            To:
-            <select>
-                <option value="12 BC">12 BC</option>
-                <option value="11 BC">11 BC</option>
-                <option value="10 BC">10 BC</option>
-                <option value="9 BC">9 BC</option>
-                <option value="8 BC">8 BC</option>
-                <option value="7 BC">7 BC</option>
-                <option value="6 BC">6 BC</option>
-                <option value="5 BC">5 BC</option>
-                <option value="4 BC">4 BC</option>
-                <option value="3 BC">3 BC</option>
-                <option value="2 BC">2 BC</option>
-                <option value="1 BC">1 BC</option>
-                <option value="1 AD">1 AD</option>
-                <option value="2 AD">2 AD</option>
-                <option value="3 AD">3 AD</option>
-                <option value="4 AD">4 AD</option>
-                <option value="5 AD">5 AD</option>
-                <option value="6 AD">6 AD</option>
-                <option value="7 AD">7 AD</option>
-                <option value="8 AD">8 AD</option>
-                <option value="9 AD">9 AD</option>
-                <option value="10 AD">10 AD</option>
-                <option value="11 AD">11 AD</option>
-                <option value="12 AD">12 AD</option>
-                <option value="13 AD">13 AD</option>
-                <option value="14 AD">14 AD</option>
-                <option value="15 AD">15 AD</option>
-                <option value="16 AD">16 AD</option>
-                <option value="17 AD">17 AD</option>
-                <option value="18 AD">18 AD</option>
-                <option value="19 AD">19 AD</option>
-                <option value="20 AD">20 AD</option>
-            </select>
+            <div class="row">
+                <div class="col s12 m6">
+                    <select class="browser-default" ng-model="site['epoch']" aria-label="Age or epoch">
+                        <option value="">Choose...</option>
+                        <option ng-repeat="e in bc.epochs" value="{{ e.value }}">{{ e.label }} ({{ e.value }})</option>
+                        <option ng-if="site.epoch && !bc.isEpoch(site.epoch)" value="{{ site.epoch }}">{{ site.epoch }}</option>
+                    </select>
+                </div>
             </div>
-            <br />
-            <button type="button" id="nextBtn" onclick="toggle_visibility('siteDiv','layerMatrixDiv')">
-                Next
-            </button>
+            <h4> Century </h4>
+            <div class="row">
+                <div class="col s6 m3">
+                    From:
+                    <select class="browser-default" ng-model="site['from']" aria-label="Century from">
+                        <option value="">—</option>
+                        <option ng-repeat="c in bc.centuries" value="{{ c }}">{{ c }}</option>
+                        <option ng-if="site.from && bc.centuries.indexOf(site.from) < 0" value="{{ site.from }}">{{ site.from }}</option>
+                    </select>
+                </div>
+                <div class="col s6 m3">
+                    To:
+                    <select class="browser-default" ng-model="site['to']" aria-label="Century to">
+                        <option value="">—</option>
+                        <option ng-repeat="c in bc.centuries" value="{{ c }}">{{ c }}</option>
+                        <option ng-if="site.to && bc.centuries.indexOf(site.to) < 0" value="{{ site.to }}">{{ site.to }}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    <input id="txtType" type="text" ng-model="site['type']"><label for="txtType">Type (Edificio, Reperto, Chiesa…)</label>
+                </div>
+                <div class="input-field col s12">
+                    <textarea id="txtInterp" class="materialize-textarea" ng-model="site['interp']"></textarea><label for="txtInterp">Interpretation</label>
+                </div>
+            </div>
+            <button type="submit" id="nextBtn"> Next </button>
+            <button type="button" class="secondary" ng-click="bc.go('search')"> Back </button>
+            <button type="button" class="danger" ng-click="bc.deleteSite()"> Delete site </button>
         </form>
     </div>
 </div>
 
-
-<div id="layerMatrixDiv" style = "display:none">
-    <table id="layerTable" border="1" class="ui table">
+<!-- LAYER MATRIX * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
+<div id="layerMatrixDiv" ng-show="bc.view === 'layers'">
+    <h4>Layers (US) of {{ site.name || site.catalog || 'this site' }}</h4>
+    <table id="layerTable" class="ui table">
         <tr>
-            <th align ="center">US</th>
-            <th align ="center"> Description </th>
-            <th align ="center"> Edit info </th>
-            <th align ="center"> Edit finds </th>
-            <th align ="center"> Remove </th>
+            <th>US</th>
+            <th> Description </th>
+            <th> Edit info </th>
+            <th> Edit finds </th>
+            <th> Remove </th>
         </tr>
-        <tr ng-repeat="el in bc.layers">
-            <td align="center"><b>{{el.newLayer.us}}</b></td>
-            <td align="center"> <input type="text" id="{{ el.newLayer.us  }}Desc" cols="40" rows="3"> </td>
-            <td align="center"> <button class="tablebutton" id="{{ el.newLayer.us  }}EditLayer" onclick="toggle_visibility('layerMatrixDiv','layerInfoDiv')">Edit</button></td>
-            <td align="center"> <button class="tablebutton" id="{{ el.newLayer.us  }}EditFinds" onclick="toggle_visibility('layerMatrixDiv','layerFindsDiv')">Edit</button></td>
-            <td align="center"> <button class="tablebutton" id="{{ el.newLayer.us   }}RemoveLayer" ng-click = "bc.removeLayer(el.newLayer.us)">Remove</button></td>
+        <tr ng-repeat="el in bc.layerList | orderBy:bc.layerOrder track by el.$key">
+            <td><b>{{ el.usnumber || el.us }}</b></td>
+            <td> <input type="text" id="{{ el.$key }}Desc" ng-model="el.description" ng-model-options="{debounce: 600}" ng-change="bc.saveLayer(el)" aria-label="Description of US {{ el.usnumber || el.us }}"> </td>
+            <td> <button class="tablebutton" ng-click="bc.editLayer(el)">Edit</button></td>
+            <td> <button class="tablebutton" ng-click="bc.editFinds(el)">Edit</button></td>
+            <td> <button class="tablebutton danger" ng-click="bc.removeLayer(el)">Remove</button></td>
+        </tr>
+        <tr ng-if="!bc.layerList.length">
+            <td colspan="5">No layers recorded yet. Use Add to create US 100.</td>
         </tr>
     </table>
 
-    <button class = "tablebutton" ng-click="bc.addLayer()">Add</button>
+    <button class="tablebutton" ng-click="bc.addLayer()">Add</button> <br/> <br/>
+    <button ng-click="bc.go('site')">Back</button>
 </div>
-<div id="layerFindsDiv" style = "display: none">
-    <table id="findTable" border ="1" class = "ui table">
+
+<!-- LAYER FINDS * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
+<div id="layerFindsDiv" ng-show="bc.view === 'finds'">
+    <h4>Finds in US {{ bc.currentLayer.usnumber || bc.currentLayer.us }}</h4>
+    <table id="findTable" class="ui table">
         <tr>
             <th> Type </th>
             <th> Description </th>
             <th> Edit </th>
+            <th> Remove </th>
         </tr>
-        <tr ng-repeat="el in bc.finds">
-            <td align="center"> {{ el.name }}</td>
-            <td align="center"> {{ el.description  }}</td>
-            <td align="center"> <button class="tablebutton" id="{{ el.key  }}EditLayer" onclick="toggle_visibility('layerFindsDiv','findFormDiv')">Edit</button></td>
+        <tr ng-repeat="el in bc.findList track by el.$key">
+            <td> {{ bc.findType(el.findtype).label || el.findtype }}</td>
+            <td> {{ el.description }}</td>
+            <td> <button class="tablebutton" ng-click="bc.editFind(el.$key)">Edit</button></td>
+            <td> <button class="tablebutton danger" ng-click="bc.removeFind(el)">Remove</button></td>
+        </tr>
+        <tr ng-if="!bc.findList.length">
+            <td colspan="4">No finds recorded in this layer yet.</td>
         </tr>
     </table>
-    <button ng-click="bc.addFind()" onclick="toggle_visibility('layerFindsDiv','chooseFindTypeDiv')">Add</button> <br/> <br/>
-    <button onclick="toggle_visibility('layerFindsDiv','layerMatrixDiv')">Back</button>
+    <button ng-click="bc.chooseFindType()">Add</button> <br/> <br/>
+    <button ng-click="bc.go('layers')">Back</button>
 </div>
 
-<div id="layerInfoDiv" style="display:none" >
-    <!--TODO Figure out radio buttons/checkboxes generating database input-->
-    <!--TODO Figure out picture uploading-->
-    <!--Site and layer fields are disabled since they are generated from a site and a layer-->
-    <form>
-        <h4>Layer Information</h4>
-        <div class="input-field col s6">
-            <input id="siteNoTxt" type="text" ng-model="USlayer['sitenumber']" >
-            <label for="siteNoTxt">Site Number</label>
+<!-- LAYER INFO (US FORM) * * * * * * * * * * * * * * * * * * * * * * * * * * -->
+<div id="layerInfoDiv" ng-show="bc.view === 'layerInfo'">
+    <p class="saved-hint">Changes are saved automatically.</p>
+    <form ng-submit="bc.go('layers')">
+        <div ng-repeat="section in bc.layerSections">
+            <h4>{{ section.title }}</h4>
+            <div class="row">
+                <div class="input-field col s12 m6" ng-repeat="f in section.fields">
+                    <input id="us_{{ f.key }}" type="text" ng-model="USlayer[f.key]"><label for="us_{{ f.key }}">{{ f.label }}</label>
+                </div>
+            </div>
         </div>
-        <div class="input-field col s6">
-    <input id="layerNoTxt" type="text" ng-model="USlayer['usnumber']" ><label for="layerNoTxt">Layer Number</label>
+
+        <h4> Type </h4>
+        <p>
+            <input type="radio" id="typeNat1" name="typeNat" value="Natural" ng-model="USlayer['type']"> <label for="typeNat1">Natural</label>
+            <input type="radio" id="typeNat2" name="typeNat" value="Artificial" ng-model="USlayer['type']"> <label for="typeNat2">Artificial</label>
+        </p>
+        <h4>Photos/Slides</h4>
+        <p ng-repeat="p in ['Photos', 'Slides']">
+            <input type="checkbox" id="chkPhoto{{ $index }}" ng-checked="bc.hasToken(USlayer, 'photoslides', p)" ng-click="bc.toggleToken(USlayer, 'photoslides', p)">
+            <label for="chkPhoto{{ $index }}">{{ p }}</label>
+        </p>
+        <h4>Color</h4>
+        <p ng-repeat="color in bc.colors">
+            <input type="checkbox" id="chkColor{{ $index }}" ng-checked="bc.hasToken(USlayer, 'color', color)" ng-click="bc.toggleToken(USlayer, 'color', color)">
+            <label for="chkColor{{ $index }}">{{ color }}</label>
+        </p>
+        <div class="row">
+            <div class="input-field col s12 m6">
+                <input id="otherTxt" type="text" ng-model="USlayer['colorother']"><label for="otherTxt">Other color</label>
+            </div>
         </div>
-        <div class="input-field col s6">
-    <input id="genCatalogNo" type="text" ng-model="USlayer['gencatnum']"><label for="genCatalogNo">Gen. Catalog Number</label>
+
+        <div class="row">
+            <div class="input-field col s12" ng-repeat="f in bc.layerNotes">
+                <textarea id="us_{{ f.key }}" class="materialize-textarea" ng-model="USlayer[f.key]"></textarea><label for="us_{{ f.key }}">{{ f.label }}</label>
+            </div>
         </div>
-        <div class="input-field col s6">
-    <input id="intCatalogNo" type="text" ng-model="USlayer['intcatnum']"><label for="intCatalogNo">International Catalog Number</label>
+
+        <h4> Age or Epoch </h4>
+        <div class="row">
+            <div class="col s12 m6">
+                <select class="browser-default" ng-model="USlayer['epoch']" aria-label="Layer epoch">
+                    <option value="">Choose...</option>
+                    <option ng-repeat="e in bc.epochs" value="{{ e.value }}">{{ e.label }} ({{ e.value }})</option>
+                    <option ng-if="USlayer.epoch && !bc.isEpoch(USlayer.epoch)" value="{{ USlayer.epoch }}">{{ USlayer.epoch }}</option>
+                </select>
+            </div>
         </div>
-        <div class="input-field col s6">
-    <input id="localityTxt" type="text" ng-model="USlayer['locality']"><label for="localityTxt">Locality</label>
+        <div class="row">
+            <div class="input-field col s12 m6" ng-repeat="f in bc.layerDating">
+                <input id="us_{{ f.key }}" type="text" ng-model="USlayer[f.key]"><label for="us_{{ f.key }}">{{ f.label }}</label>
+            </div>
         </div>
-    <input id="yearTxt" type="text" placeholder="Year" ng-model="USlayer['year']">
-    <br/><br/>
-    <input id="areaTxt" type="text" placeholder="Area" ng-model="USlayer['area']">
-    <br/><br/>
-    <input id="sectorTxt" type="text" placeholder="Sector" ng-model="USlayer['sector']">
-    <br/><br/>
-    <input id="environmentTxt" type="text" placeholder="Environment" ng-model="USlayer['environment']">
-    <br/><br/>
-    <input id="quadrantTxt" type="text" placeholder="Quadrant" ng-model="USlayer['quadrant']">
-    <br/><br/>
-    <input id="sharesTxt" type="text" placeholder="Shares" ng-model="USlayer['shares']">
-    <br/><br/>
-    <h4> Type: </h4>
-    <input type="radio" name="typeNat" value="Natural"> Yes
-    <br/>
-    <input type="radio" name="typeNat" value="Artificial"> No
-    <br/>
-    <input id="plantsTxt" type="text" placeholder="Plants" ng-model="USlayer[plants']">
-    <br/>
-    <h4>Photos/Slides</h4>
-    <input type = "checkbox" id="chkPhotos" value="Structure"> Structure<br />
-    <input type = "checkbox" id="chkSlides" value="Layers"> Layers<br /><br />
-    <!--Upload photos and replace "N.Photos" with it?-->
-    <input id="nPhotosTxt" type="text" placeholder="N.Photos" ng-model="USlayer['nphotos']">
-    <br/><br/>
-    <input id="tabMaterialTxt" type="text" placeholder="Tab Material" ng-model="USlayer['tabmaterial']">
-    <br/><br/>
-    <input id="definitionTxt" type="text" placeholder="Definition" ng-model="USlayer['definition']">
-    <br/><br/>
-    <input id="critTxt" type="text" placeholder="Distinctive Criteria" ng-model="USlayer['descriptcriter']">
-    <br/><br/>
-    <input id="methodTxt" type="text" placeholder="Method of Formation" ng-model="USlayer['methodform']">
-    <br/><br/>
-    <input id="geoTxt" type="text" placeholder="Geologic Components" ng-model="USlayer['geocomp']">
-    <br/><br/>
-    <input id="organicTxt" type="text" placeholder="Organic components" ng-model="USlayer['orgcomp']">
-    <br/><br/>
-    <input id="artificialTxt" type="text" placeholder="Artificial Components" ng-model="USlayer['articomp']">
-    <br/><br/>
-    <input id="consistencyTxt" type="text" placeholder="Consistency" ng-model="USlayer['consistency']">
-    <br/><br/>
-    <h4>Color</h4>
-    <input type = "checkbox" id="chkRed" value="Red"> Red<br />
-    <input type = "checkbox" id="chkGrey" value="Grey"> Grey<br />
-    <input type = "checkbox" id="chkGreen" value="Green"> Green<br />
-    <input type = "checkbox" id="chkYellow" value="Yellow"> Yellow<br />
-    <input type = "checkbox" id="chkBlack" value="Black"> Black<br />
-    <input type = "checkbox" id="chkBrown" value="Brown"> Brown <br />
-    <input type = "checkbox" id="chkWhite" value="White"> White <br />
-    <input type = "checkbox" id="chkOther" value="Other"> Other:
-    <input id="otherTxt" type="text"><br /><br/>
-    <input id="measuresTxt" type="text" placeholder="Measures" ng-model="USlayer['measures']">
-    <br/><br/>
-    <input id="stateTxt" type="text" placeholder="State of Conservation" ng-model="USlayer['conservationstate']">
-    <br/><br/>
-    <h4>Description:</h4>
-    <!--TODO implement ng-model in textarea-->
-    <textarea id="descriptionTxt" cols="80" rows="5" ng-model="USlayer['description']"> </textarea>
-    <h4>Observations:</h4>
-    <textarea id="observationsTxt" cols="40" rows="3" ng-model="USlayer['observations']"> </textarea>
-    <h4>Interpretation:</h4>
-    <textarea id="interpretationTxt" cols="40" rows="3" ng-model="USlayer['interpretation']"> </textarea><br/>
-    <input id="datingelemTxt" type="text" placeholder="Dating Elements" ng-model="USlayer['datingelt']">
-    <br/><br/>
-    <h4> Age or Epoch </h4>
-    <select>
-        <option value="Paleolithic">Paleolithic</option>
-        <option value="Mesolithic">Mesolithic</option>
-        <option value="Neolithic">Neolithic</option>
-        <option value="Copper Age">Copper Age</option>
-        <option value="Bronze Age">Bronze Age</option>
-        <option value="Iron Age">Iron Age</option>
-        <option value="Roman">Roman</option>
-        <option value="Late Antiquity">Late Antiquity</option>
-        <option value="Early Medival">Early Medival</option>
-        <option value="Late Medival">Late Medival</option>
-        <option value="Modern">Modern</option>
-        <option value="Contemporary">Contemporary</option>
-    </select>
-    <br /><br/>
-    <input id="quantFindTxt" type="text" placeholder="Quantitative Find Data" ng-model="USlayer['quantitativefinddata']">
-    <br/><br/>
-    <input id="samplesTxt" type="text" placeholder="Samples" ng-model="USlayer['samples']">
-    <br/><br/>
-    <input id="floatationTxt" type="text" placeholder="Floatation" ng-model="USlayer['float']">
-    <br/><br/>
-    <input id="sievingTxt" type="text" placeholder="Sieving" ng-model="USlayer['sieve']">
-    <br/><br/>
-    <input id="stratigReliabilityTxt" type="text" placeholder="Stratigraphic Reliability" ng-model="USlayer['stratigraphicrel']">
-    <br/><br/>
-    <input id="directorTxt" type="text" placeholder="Director" ng-model="USlayer['director']">
-    <br/><br/>
-    <input id="responsibleTxt" type="text" placeholder="Responsible" ng-model="USlayer['responsible']">
-    <br/><br/>
-    <h4>Layer relationships:</h4>
-    <input id="equaltoTxt" type="text" placeholder="Equal to" ng-model="USlayer['equalto']">
-    <br/><br/>
-    <input id="restedOnByTxt" type="text" placeholder="Rested on by" ng-model="USlayer['restedonby']">
-    <br/><br/>
-    <input id="coveredByTxt" type="text" placeholder="Covered by" ng-model="USlayer['coveredby']">
-    <br/><br/>
-    <input id="cutByTxt" type="text" placeholder="Cut by" ng-model="USlayer['cutby']">
-    <br/><br/>
-    <input id="filledByTxt" type="text" placeholder="Filled by" ng-model="USlayer['filledby']">
-    <br/><br/>
-    <input id="boundToTxt" type="text" placeholder="Bound to" ng-model="USlayer['boundto']">
-    <br/><br/>
-    <input id="LeansOnTxt" type="text" placeholder="Leans on" ng-model="USlayer['leanson']">
-    <br/><br/>
-    <input id="coveringTxt" type="text" placeholder="Covering" ng-model="USlayer['covering']">
-    <br/><br/>
-    <input id="cuttingTxt" type="text" placeholder="Cutting" ng-model="USlayer['cutting']">
-    <br/><br/>
-    <input id="fillingTxt" type="text" placeholder="Filling" ng-model="USlayer['filling']">
-    <br/><br/>
-    <input id="inFrontOfTxt" type="text" placeholder="In front of" ng-model="USlayer['infrontof']">
-    <br/><br/>
-    <input id="behindTxt" type="text" placeholder="Behind" ng-model="USlayer['behind']">
-    <br/><br/>
+
+        <h4>Layer relationships</h4>
+        <div class="row">
+            <div class="input-field col s12 m6 l4" ng-repeat="f in bc.layerRelations">
+                <input id="us_{{ f.key }}" type="text" ng-model="USlayer[f.key]"><label for="us_{{ f.key }}">{{ f.label }}</label>
+            </div>
+        </div>
+        <button type="submit">Back</button>
     </form>
 </div>
 
-<div id="chooseFindTypeDiv" style="display:none">
+<!-- CHOOSE FIND TYPE * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
+<div id="chooseFindTypeDiv" ng-show="bc.view === 'chooseFindType'">
     <h2>Choose the type of find you would like to add:</h2>
-    <input type="radio" name="findType" value="OrgInorg"> Organic/Inorganic find <br/>
-    <input type="radio" name="findType" value="HandCrStone"> Handcrafted stone<br/>
-    <input type="radio" name="findType" value="Skeleton"> Skeleton<br/>
-    <input type="radio" name="findType" value="Tomb"> Tomb<br/>
-    <input type="radio" name="findType" value="Struct"> Structure<br/>
-    <input type="radio" name="findType" value="Pole"> Pole<br/>
+    <p ng-repeat="t in bc.findTypes">
+        <input type="radio" id="findType{{ $index }}" name="findType" value="{{ t.value }}" ng-model="bc.newFindType">
+        <label for="findType{{ $index }}">{{ t.label }}</label>
+    </p>
 
-    <button ng-click="bc.addFind()">Next</button> <br/> <br/>
-
-
+    <button ng-click="bc.addFind()" ng-disabled="!bc.newFindType">Next</button> <br/> <br/>
+    <button ng-click="bc.go('finds')">Back</button>
 </div>
 
-
-
-
-
-<script src="/scripts/plugin/jquery-2.1.3.min.js"></script>
-<script src="/scripts/plugin/semantic.min.js"></script>
-<script src="/scripts/plugin/semantic.editableRecord.js"></script>
-
-<!-- SCRIPTS -->
-<script type="text/javascript" src="/scripts/general.js"></script>
+<!-- FIND FORM * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
+<div id="findFormDiv" ng-show="bc.view === 'findForm'">
+    <p class="saved-hint">Changes are saved automatically.</p>
+    <form ng-submit="bc.go('finds')">
+        <h4>{{ bc.findType(find.findtype).label || 'Find' }}</h4>
+        <div class="row">
+            <div class="col s12" ng-class="{'input-field': f.type !== 'yesno', 'm6': !f.type}" ng-repeat="f in bc.findType(find.findtype).fields">
+                <input ng-if="!f.type" id="find_{{ f.key }}" type="text" ng-model="find[f.key]">
+                <textarea ng-if="f.type === 'textarea'" id="find_{{ f.key }}" class="materialize-textarea" ng-model="find[f.key]"></textarea>
+                <label ng-if="f.type !== 'yesno'" for="find_{{ f.key }}">{{ f.label }}</label>
+                <div ng-if="f.type === 'yesno'">
+                    <h5>{{ f.label }}</h5>
+                    <input type="radio" id="find_{{ f.key }}Yes" name="find_{{ f.key }}" value="Yes" ng-model="find[f.key]"> <label for="find_{{ f.key }}Yes">Yes</label>
+                    <input type="radio" id="find_{{ f.key }}No" name="find_{{ f.key }}" value="No" ng-model="find[f.key]"> <label for="find_{{ f.key }}No">No</label>
+                </div>
+            </div>
+        </div>
+        <button type="submit">Back</button>
+    </form>
+</div>

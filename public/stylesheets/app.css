@@ -116,7 +116,7 @@ span.psw {
 }
 
 /* The Modal (background) */
-.modal {
+.login-modal {
     display: none; /* Hidden by default */
     position: fixed; /* Stay in place */
     z-index: 1; /* Sit on top */
@@ -191,3 +191,104 @@ th, td {
     border-bottom: 1px solid #ddd;
 }
 
+
+/* * * Added when the app was completed (2026) * * */
+[ng-cloak], .ng-cloak { display: none !important; }
+
+body { background-color: #fff; }
+#barDiv, #topBar { padding: 0; }
+
+ul.topnav #uName {
+    color: #ccc;
+    padding: 14px 16px;
+}
+
+.login-modal { display: block; }
+.login-modal .modal-content { max-width: 480px; }
+.login-modal input[type=email].modaltext,
+.login-modal input[type=password].modalpassword {
+    height: auto;
+    width: 80%;
+    padding: 12px 20px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+.ui.message {
+    margin: 8px auto;
+    width: 80%;
+    padding: 8px 12px;
+    border-radius: 4px;
+}
+.ui.error.message { background: #fff6f6; color: #9f3a38; border: 1px solid #e0b4b4; }
+.ui.info.message { background: #f8ffff; color: #276f86; border: 1px solid #a9d5de; }
+
+.loading {
+    text-align: center;
+    padding-top: 120px;
+    color: #9e9e9e;
+}
+
+.notice {
+    background: #fff8e1;
+    border-left: 4px solid #ffb300;
+    margin: 12px 0;
+}
+
+.choice { text-align: center; }
+
+button:disabled {
+    background-color: #9e9e9e;
+    cursor: default;
+}
+button.secondary { background-color: #607d8b; }
+button.danger, .tablebutton.danger { background-color: #c62828; }
+.tablebutton { width: auto; min-width: 60px; }
+
+.saved-hint {
+    color: #9e9e9e;
+    font-size: 0.9rem;
+    text-align: right;
+    margin: 0;
+}
+
+.description-cell { max-width: 420px; }
+#SiteTable td, #layerTable td, #findTable td { vertical-align: top; }
+#layerTable input[type=text] { margin: 0; }
+
+/* Site map */
+#siteMap {
+    height: 70vh;
+    min-height: 420px;
+    border: 1px solid #ddd;
+}
+#siteMap div { padding: 0; }
+#siteMap .leaflet-popup-content-wrapper { padding: 1px; }
+#siteMap .leaflet-control-layers { padding: 6px 10px 6px 6px; }
+#siteMap .leaflet-control-layers label { font-size: 13px; color: #333; }
+#siteMap .leaflet-control-layers input[type=checkbox] {
+    position: static;
+    opacity: 1;
+    pointer-events: auto;
+    margin-right: 4px;
+}
+#siteMap .map-edit { width: auto; padding: 4px 10px; margin-top: 6px; }
+#siteMap .map-legend {
+    background: rgba(255, 255, 255, 0.92);
+    padding: 6px 10px;
+    border-radius: 4px;
+    line-height: 18px;
+    font-size: 12px;
+    color: #333;
+}
+#siteMap .map-legend span {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin-right: 6px;
+}
+
+@media screen and (max-width: 600px) {
+    .container { width: 94%; }
+    .login-modal .modal-content { width: 92%; }
+}
