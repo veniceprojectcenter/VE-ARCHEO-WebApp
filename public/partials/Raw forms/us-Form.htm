@@ -1,0 +1,134 @@
+<div id="layerInfoDiv" style="display:none" >
+    <!--TODO Figure out radio buttons/checkboxes generating database input-->
+    <!--TODO Figure out picture uploading-->
+    <!--Site and layer fields are disabled since they are generated from a site and a layer-->
+    <input id="siteNoTxt" type="text" placeholder="Site Number" ng-model="USlayer['sitenumber']" disabled>
+    <br/>
+    <input id="layerNoTxt" type="text" placeholder="Layer Number" ng-model="USlayer['usnumber']" disabled>
+    <br/>
+    <input id="genCatalogNo" type="text" placeholder="Gen. Catalog Number" ng-model="USlayer['gencatnum']">
+    <br/>
+    <input id="intCatalogNo" type="text" placeholder="International Catalog Number" ng-model="USlayer['intcatnum']">
+    <br/>
+    <input id="localityTxt" type="text" placeholder="Locality" ng-model="USlayer['locality']">
+    <br/>
+    <input id="yearTxt" type="text" placeholder="Year" ng-model="USlayer['year']">
+    <br/>
+    <input id="areaTxt" type="text" placeholder="Area" ng-model="USlayer['area']">
+    <br/>
+    <input id="sectorTxt" type="text" placeholder="Sector" ng-model="USlayer['sector']">
+    <br/>
+    <input id="environmentTxt" type="text" placeholder="Environment" ng-model="USlayer['environment']">
+    <br/>
+    <input id="quadrantTxt" type="text" placeholder="Quadrant" ng-model="USlayer['quadrant']">
+    <br/>
+    <input id="sharesTxt" type="text" placeholder="Shares" ng-model="USlayer['shares']">
+    <br/>
+    <h4> Type: </h4>
+    <input type="radio" name="typeNat" value="Natural"> Yes
+    <br/>
+    <input type="radio" name="typeNat" value="Artificial"> No
+    <br/>
+    <input id="plantsTxt" type="text" placeholder="Plants" ng-model="USlayer[plants']">
+    <br/>
+    <h4>Photos/Slides</h4>
+    <input type = "checkbox" id="chkPhotos" value="Structure"> Structure<br />
+    <input type = "checkbox" id="chkSlides" value="Layers"> Layers<br /><br />
+    <!--Upload photos and replace "N.Photos" with it?-->
+    <input id="nPhotosTxt" type="text" placeholder="N.Photos" ng-model="USlayer['nphotos']">
+    <br/>
+    <input id="tabMaterialTxt" type="text" placeholder="Tab Material" ng-model="USlayer['tabmaterial']">
+    <br/>
+    <input id="definitionTxt" type="text" placeholder="Definition" ng-model="USlayer['definition']">
+    <br/>
+    <input id="critTxt" type="text" placeholder="Distinctive Criteria" ng-model="USlayer['descriptcriter']">
+    <br/>
+    <input id="methodTxt" type="text" placeholder="Method of Formation" ng-model="USlayer['methodform']">
+    <br/>
+    <input id="geoTxt" type="text" placeholder="Geologic Components" ng-model="USlayer['geocomp']">
+    <br/>
+    <input id="organicTxt" type="text" placeholder="Organic components" ng-model="USlayer['orgcomp']">
+    <br/>
+    <input id="artificialTxt" type="text" placeholder="Artificial Components" ng-model="USlayer['articomp']">
+    <br/>
+    <input id="consistencyTxt" type="text" placeholder="Consistency" ng-model="USlayer['consistency']">
+    <br/>
+    <h4>Color</h4>
+    <input type = "checkbox" id="chkRed" value="Red"> Red<br />
+    <input type = "checkbox" id="chkGrey" value="Grey"> Grey<br />
+    <input type = "checkbox" id="chkGreen" value="Green"> Green<br />
+    <input type = "checkbox" id="chkYellow" value="Yellow"> Yellow<br />
+    <input type = "checkbox" id="chkBlack" value="Black"> Black<br />
+    <input type = "checkbox" id="chkBrown" value="Brown"> Brown <br />
+    <input type = "checkbox" id="chkWhite" value="White"> White <br />
+    <input type = "checkbox" id="chkOther" value="Other"> Other:
+    <input id="otherTxt" type="text"><br /><br/>
+    <input id="measuresTxt" type="text" placeholder="Measures" ng-model="USlayer['measures']">
+    <br/>
+    <input id="stateTxt" type="text" placeholder="State of Conservation" ng-model="USlayer['conservationstate']">
+    <br/>
+    <h4>Description:</h4>
+    <!--TODO implement ng-model in textarea-->
+    <textarea id="descriptionTxt" cols="80" rows="5" ng-model="USlayer['description']"> </textarea>
+    <h4>Observations:</h4>
+    <textarea id="observationsTxt" cols="40" rows="3" ng-model="USlayer['observations']"> </textarea>
+    <h4>Interpretation:</h4>
+    <textarea id="interpretationTxt" cols="40" rows="3" ng-model="USlayer['interpretation']"> </textarea><br/>
+    <input id="datingelemTxt" type="text" placeholder="Dating Elements" ng-model="USlayer['datingelt']">
+    <br/>
+    <h4> Age or Epoch </h4>
+    <select>
+        <option value="Paleolithic">Paleolithic</option>
+        <option value="Mesolithic">Mesolithic</option>
+        <option value="Neolithic">Neolithic</option>
+        <option value="Copper Age">Copper Age</option>
+        <option value="Bronze Age">Bronze Age</option>
+        <option value="Iron Age">Iron Age</option>
+        <option value="Roman">Roman</option>
+        <option value="Late Antiquity">Late Antiquity</option>
+        <option value="Early Medival">Early Medival</option>
+        <option value="Late Medival">Late Medival</option>
+        <option value="Modern">Modern</option>
+        <option value="Contemporary">Contemporary</option>
+    </select>
+    <br />
+    <input id="quantFindTxt" type="text" placeholder="Quantitative Find Data" ng-model="USlayer['quantitativefinddata']">
+    <br/>
+    <input id="samplesTxt" type="text" placeholder="Samples" ng-model="USlayer['samples']">
+    <br/>
+    <input id="floatationTxt" type="text" placeholder="Floatation" ng-model="USlayer['float']">
+    <br/>
+    <input id="sievingTxt" type="text" placeholder="Sieving" ng-model="USlayer['sieve']">
+    <br/>
+    <input id="stratigReliabilityTxt" type="text" placeholder="Stratigraphic Reliability" ng-model="USlayer['stratigraphicrel']">
+    <br/>
+    <input id="directorTxt" type="text" placeholder="Director" ng-model="USlayer['director']">
+    <br/>
+    <input id="responsibleTxt" type="text" placeholder="Responsible" ng-model="USlayer['responsible']">
+    <br/>
+    <h4>Layer relationships:</h4>
+    <input id="equaltoTxt" type="text" placeholder="Equal to" ng-model="USlayer['equalto']">
+    <br/>
+    <input id="restedOnByTxt" type="text" placeholder="Rested on by" ng-model="USlayer['restedonby']">
+    <br/>
+    <input id="coveredByTxt" type="text" placeholder="Covered by" ng-model="USlayer['coveredby']">
+    <br/>
+    <input id="cutByTxt" type="text" placeholder="Cut by" ng-model="USlayer['cutby']">
+    <br/>
+    <input id="filledByTxt" type="text" placeholder="Filled by" ng-model="USlayer['filledby']">
+    <br/>
+    <input id="boundToTxt" type="text" placeholder="Bound to" ng-model="USlayer['boundto']">
+    <br/>
+    <input id="LeansOnTxt" type="text" placeholder="Leans on" ng-model="USlayer['leanson']">
+    <br/>
+    <input id="coveringTxt" type="text" placeholder="Covering" ng-model="USlayer['covering']">
+    <br/>
+    <input id="cuttingTxt" type="text" placeholder="Cutting" ng-model="USlayer['cutting']">
+    <br/>
+    <input id="fillingTxt" type="text" placeholder="Filling" ng-model="USlayer['filling']">
+    <br/>
+    <input id="inFrontOfTxt" type="text" placeholder="In front of" ng-model="USlayer['infrontof']">
+    <br/>
+    <input id="behindTxt" type="text" placeholder="Behind" ng-model="USlayer['behind']">
+    <br/>
+</div>

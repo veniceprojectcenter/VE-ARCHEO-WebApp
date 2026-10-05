@@ -1,0 +1,25 @@
+<div id="searchDiv" style="display:none">
+    <div class="content">
+        <h2> Please enter the site number</h2>
+        <form>
+            <input type="text" class="searchBar" name="search" placeholder="Search.." ng-model="bc.searchTxt">
+            <br/>
+            <button id="searchBtn" ng-click="bc.searchSite()" value="Send" ng-disabled="bc.searchTxt==null"> </button>
+        </form>
+        <table id="SiteTable" border="1" class="ui table">
+            <tr>
+                <th> Site ID </th>
+                <th> Site name </th>
+                <th> Description </th>
+                <th> Edit site </th>
+            </tr>
+            <tr ng-repeat="site in bc.searchResults">
+                <td align="center"> {{ el.newLayer.us }} </td>
+                <td align="center"> <textarea id="{{ el.newLayer.us  }}Desc" cols="40" rows="3"> </textarea></td>
+                <td align="center"> <button class="tablebutton" id="{{ el.newLayer.us  }}EditLayer" onclick="toggle_visibility('layerMatrixDiv','layerInfoDiv')">Edit</button></td>
+                <td align="center"> <button class="tablebutton" id="{{ el.newLayer.us  }}EditFinds" onclick="toggle_visibility('layerMatrixDiv','layerFindsDiv')">Edit</button></td>
+                <td align="center"> <button class="tablebutton" id="{{ el.newLayer.us   }}RemoveLayer" ng-click = "bc.removeLayer(el.newLayer.us)">Remove</button></td>
+            </tr>
+        </table>
+    </div>
+</div>
